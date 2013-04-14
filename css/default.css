@@ -1,0 +1,45 @@
+@charset "utf-8";
+body{
+    background-color:#776655;
+}
+section{
+    border-radius:3em;
+    background-color:#fff;
+    margin:1em;
+    padding:1em;
+}
+h1{
+    font-size:400%;
+    padding:0;
+    margin:0;
+}
+h2{
+    padding:0.5em 1em;
+    background-color:#776655;
+    color:#fff;
+    border-radius:3em;
+    box-shadow:0.1em 0.1em 1em #776655;
+    
+}
+h3{
+    margin-left:1.4em;
+    border-bottom:1px dotted #000;
+    padding-left:0.2em;
+
+}    
+
+p{
+    padding-left:2.4em;
+}
+strong{
+    color:red;
+}
+#licence{
+    border-radius:0;
+    border:0px solid #000;
+
+}
+img{
+    border-radius:1em;
+    border:1px solid #000;
+}

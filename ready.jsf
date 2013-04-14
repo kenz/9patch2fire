@@ -1,0 +1,2 @@
+fw.getDocumentDOM().addNewLayer("patches", false);
+fw.getDocumentDOM().addNewLayer("content", false);

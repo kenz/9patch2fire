@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<link rel="stylesheet" href="css/default.css" />
+		<meta charset="utf-8" />
+		<title>manual</title>
+	</head>
+	<body>
+	<section>
+		<h1>9patch2fire</h1>
+
+		<h2>概要</h2>
+		<p>9patch2fireはAndroidの9patchを出力するためのFireworksスクリプトです。</p>
+		<p>動作には<a href="http://www.amazon.co.jp/gp/product/B007STFV9G/ref=as_li_ss_tl?ie=UTF8&camp=247&creative=7399&creativeASIN=B007STFV9G&linkCode=as2&tag=firespeedkenz-22">Adobe Fireworks</a>
+		<img src="http://www.assoc-amazon.jp/e/ir?t=firespeedkenz-22&l=as2&o=9&a=B007STFV9G" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />が必要となります。</p>
+		<p>標準の9patce-toolでは困難だった複数解像度への出力、ドットの位置決め、元データを修正するたびに9patchを作り直さないと行けないといった問題を解消するためにFireworksから直接各解像度ごとの9patchを出力します。</p>
+
+		<h2>使用方法</h2>
+		<p>9patch2fireには二つのスクリプトがあります。</p>
+
+		<h3>ready.jsfの実行</h3>
+		<p>9patchを作成するドキュメントを開いた後に、ready.jsfを実行します。ready.jsfを実行するにはメニューバーよりコマンド-スクリプトを実行を選びます。<br />
+		<img src="images/command.png" /></p>
+		<p>patch2fのready.jsfファイルを開きます。</p>
+		<p>新しいレイヤー contentとpatchesが追加されます。<br />
+		<img src="images/layer.png" /></p>
+
+		<h3>素材の作成</h3>
+		<p>Fireworks上で素材を作っていきます。この際、contentとpatchesの内容は出力されないためご注意下さい。<br />
+		画像のサイズはxhdpi（1インチあたり約320ドット）で作成してください。<br />
+		<img src="images/create.png" /></p>
+
+		<h3>contentおよびpatchesの作成</h3>
+
+		<p>コンテンツ部分を示すcontentと、引き延ばす場所を示すpatchesをそれぞれのレイヤーに配置していきます。<br />
+		<img src="images/draw.png" /></p>
+
+		<h3>make.jsfの実行</h3>
+		<p>9patchを作成するドキュメントを開いた後に、make.jsfを実行します。メニューバーよりコマンド-スクリプトを実行を選びます。<br />
+		<img src="images/command.png" /></p>
+		<p>patch2fのmake.jsfファイルを開きます。</p>
+		<p>fireworksファイルを保存する前の場合ファイルの保存画面が表示されます。<strong>ここで指定したファイル名でファイルが作成されます。</strong></p>
+		<p>次にファイルを出力するフォルダを指定します。<br />
+		<img src="images/saveas.png" /></p>
+		<p>指定したフォルダの下にoutputフォルダが作成されます。<br />
+		outputフォルダにはoriginalImage.pngと各解像度ごとのフォルダが作成されています。<br />
+		originalImage.pngは9patchを出力する元となったFireworksのファイルです。不要な場合削除して問題有りません。<br />
+		<strong>Androidのソースには含めないようにしてください。</strong><br />
+		<img src="images/output.png" /></p>
+		<p>各解像度フォルダの中にはそれぞれの解像度に応じた9patchファイルが作成されています。<br />
+		<img src="images/result.png" /></p>
+
+		<h2>ライセンス</h2>
+		<p><a href="http://creativecommons.org/licenses/by/3.0/">Creative commons 3.0</a>に基づきライセンス条件を継承の上で自由に改変、再頒布、商用利用が可能です。<br />
+		また、このツールを用いて作成されたコンテンツの著作権は各コンテンツ作成者の帰属します。<br />
+		<img id="licence" src="images/CC-BY-SA.png" /></p>
+
+		<h2>お問い合わせ先</h2>
+		<p>githubか<a href="http://firespeed.org">firespeed.org</a>にコメント下さい</p>
+
+	</section>
+	</body>
+</html>

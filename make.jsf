@@ -1,0 +1,85 @@
+/*************************************************
+Androidで必要な複数解像度のpngを作るマクロちゃん
+CS4+Windowsでしかテストしてないよ Mac版のFireworksを買ってくれたらテストするよ
+
+created Kenji Matsuoka （http://firespeed.org）
+Creative Commons Attribution 2.5.
+*************************************************/
+var dom = fw.getDocumentDOM();
+var fileName = dom.docTitleWithoutExtension;
+try{
+	if(!fileName){
+		fw.saveDocumentAs(null, true);
+		var fileName = dom.docTitleWithoutExtension;
+	}
+	folderURL = fw.browseForFolderURL("Save as","file:///c/");
+	if(!fileName || !folderURL){
+		 throw new Error("Process cancelled");
+	}
+
+	fileName += ".9.png";
+	var folder = folderURL.replace("file:///", "");
+
+	folder = folder.replace("|", ":");
+	folder = folder.replace(/\//g, "\\");
+	folder += "\\output\\";
+	folderURL += "/output/";
+	var createFolder = new Folder (folder);
+	createFolder.create();
+	originalFile = folderURL+"originalImage.png";
+	fw.saveDocumentCopyAs(null,originalFile);
+
+	var originalHeight = fw.getDocumentDOM().height;
+	var originalWidth  = fw.getDocumentDOM().width;
+	var originalDpi = 320;
+
+	var dpis = new Array("xhdpi",320,"hdpi",240,"mdpi",160,"ldpi",120);
+	var dpiLength = dpis.length;
+	var layerLength = dom.layers.length;
+	
+	for(var i=0; i<dpiLength;i+=2){
+		var editDocument = fw.openDocument(originalFile, true, false)
+		var editDom = fw.getDocumentDOM();
+		editDom.setBrushNColor({ alphaRemap:"none", angle:0, antiAliased:false, aspect:100, blackness:0, category:"bc_Pencil", concentration:100, dashOffSize1:2, dashOffSize2:2, dashOffSize3:2, dashOnSize1:8, dashOnSize2:1, dashOnSize3:1, diameter:1, feedback:"none", flowRate:0, maxCount:15, minSize:1, name:"bn_1-Pixel", numDashes:0, shape:"circle", softenMode:"bell curve", softness:0, spacing:15, textureBlend:0, textureEdge:0, tipColoringMode:"random", tipCount:1, tipSpacing:0, tipSpacingMode:"random", type:"simple" }, "#000000");
+		var folderName = folder+dpis[i];
+		var exportFolderURL =  folderURL+dpis[i];
+		createFolder = new Folder (folderName);
+		createFolder.create();
+
+		var newDpi = dpis[i+1];
+		var resizeHeight = originalHeight * newDpi / originalDpi;
+		var resizeWidth = originalHeight * newDpi / originalDpi;
+
+		if(originalDpi != newDpi){
+			fw.getDocumentDOM().setDocumentImageSize({left:0, top:0, right:resizeWidth, bottom:resizeHeight}, {pixelsPerUnit:newDpi, units:"inch"}, true);
+		}
+		fw.getDocumentDOM().setDocumentCanvasSize({left:-1, top:-1, right:resizeWidth+2, bottom:resizeHeight+2}, true);
+		for(var j=0; j<layerLength; j++){
+			if(editDom.layers[j].name == "patches"){
+				editDom.setLayerVisible(j, -1, false, false);
+				var elemsLength = editDom.layers[j].elems.length;
+				var elems = editDom.layers[j].elems;
+				for(var k=0; k<elemsLength; k++){
+					var elem = elems[k];
+					fw.getDocumentDOM().addNewLine({x:0, y:Math.round(elem.top)}, {x:0, y:Math.round(elem.top+elem.height)});
+					fw.getDocumentDOM().addNewLine({x:Math.round(elem.left), y:0}, {x:Math.round(elem.left+elem.width), y:0});
+				}
+			}else if(editDom.layers[j].name == "content"){
+				editDom.setLayerVisible(j, -1, false, false);
+				var elemsLength = editDom.layers[j].elems.length;
+				var elems = editDom.layers[j].elems;
+				for(var k=0; k<elemsLength; k++){
+					var elem = elems[k];
+					fw.getDocumentDOM().addNewLine({x:resizeWidth+2, y:Math.round(elem.top)}, {x:resizeWidth+2, y:Math.round(elem.top+elem.height)});
+					fw.getDocumentDOM().addNewLine({x:Math.round(elem.left), y:resizeHeight+2}, {x:Math.round(elem.left+elem.width), y:resizeHeight+2});
+				}
+				
+			}
+
+		}
+		fw.exportDocumentAs(null, exportFolderURL + "/"+fileName, null);
+		fw.closeDocument(editDocument, false);
+	}
+} catch(e) {
+	alert(e.message);
+}
