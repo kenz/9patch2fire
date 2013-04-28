@@ -21,14 +21,17 @@ try{
 	var folder = folderURL.replace("file:///", "");
 
 	folder = folder.replace("|", ":");
-	folder = folder.replace(/\//g, "\\");
-	folder += "\\output\\";
+	if(fw.getDynamicSWFURL.indexOf("&plat=win")>0){
+		folder = folder.replace(/\//g, "\\");
+		folder += "\\output\\";
+	}else{
+		folder += "/output/";
+	}
 	folderURL += "/output/";
 	var createFolder = new Folder (folder);
 	createFolder.create();
 	originalFile = folderURL+"originalImage.png";
-	fw.saveDocumentCopyAs(null,originalFile);
-
+	fw.saveDocumentCopyAs(null,originalFile); 
 	var originalHeight = fw.getDocumentDOM().height;
 	var originalWidth  = fw.getDocumentDOM().width;
 	var originalDpi = 320;
@@ -36,7 +39,6 @@ try{
 	var dpis = new Array("xhdpi",320,"hdpi",240,"mdpi",160,"ldpi",120);
 	var dpiLength = dpis.length;
 	var layerLength = dom.layers.length;
-	
 	for(var i=0; i<dpiLength;i+=2){
 		var editDocument = fw.openDocument(originalFile, true, false)
 		var editDom = fw.getDocumentDOM();
