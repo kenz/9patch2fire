@@ -1,9 +1,8 @@
 /*************************************************
-Android‚Å•K—v‚È•¡”‰ğ‘œ“x‚Ìpng‚ğì‚éƒ}ƒNƒ‚¿‚á‚ñ
-CS4+Windows‚Å‚µ‚©ƒeƒXƒg‚µ‚Ä‚È‚¢‚æ Mac”Å‚ÌFireworks‚ğ”ƒ‚Á‚Ä‚­‚ê‚½‚çƒeƒXƒg‚·‚é‚æ
+9patch2fire
 
-created Kenji Matsuoka ihttp://firespeed.orgj
-Creative Commons Attribution 2.5.
+created Kenji Matsuoka ï¼ˆhttp://firespeed.orgï¼‰
+Creative Commons Attribution 3.0.
 *************************************************/
 var dom = fw.getDocumentDOM();
 var fileName = dom.docTitleWithoutExtension;
