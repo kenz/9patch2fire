@@ -49,12 +49,12 @@ try{
 
 		var newDpi = dpis[i+1];
 		var resizeHeight = originalHeight * newDpi / originalDpi;
-		var resizeWidth = originalHeight * newDpi / originalDpi;
+		var resizeWidth = originalWidth * newDpi / originalDpi;
 
 		if(originalDpi != newDpi){
 			fw.getDocumentDOM().setDocumentImageSize({left:0, top:0, right:resizeWidth, bottom:resizeHeight}, {pixelsPerUnit:newDpi, units:"inch"}, true);
 		}
-		fw.getDocumentDOM().setDocumentCanvasSize({left:-1, top:-1, right:resizeWidth+2, bottom:resizeHeight+2}, true);
+		fw.getDocumentDOM().setDocumentCanvasSize({left:-1, top:-1, right:resizeWidth+1, bottom:resizeHeight+1}, true);
 		for(var j=0; j<layerLength; j++){
 			if(editDom.layers[j].name == "patches"){
 				editDom.setLayerVisible(j, -1, false, false);
@@ -72,7 +72,7 @@ try{
 				for(var k=0; k<elemsLength; k++){
 					var elem = elems[k];
 					fw.getDocumentDOM().addNewLine({x:resizeWidth+2, y:Math.round(elem.top)}, {x:resizeWidth+2, y:Math.round(elem.top+elem.height)});
-					fw.getDocumentDOM().addNewLine({x:Math.round(elem.left), y:resizeHeight+2}, {x:Math.round(elem.left+elem.width), y:resizeHeight+2});
+					fw.getDocumentDOM().addNewLine({x:Math.round(elem.left), y:resizeHeight+1}, {x:Math.round(elem.left+elem.width), y:resizeHeight+1});
 				}
 				
 			}
