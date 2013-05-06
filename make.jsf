@@ -71,7 +71,7 @@ try{
 				var elems = editDom.layers[j].elems;
 				for(var k=0; k<elemsLength; k++){
 					var elem = elems[k];
-					fw.getDocumentDOM().addNewLine({x:resizeWidth+2, y:Math.round(elem.top)}, {x:resizeWidth+2, y:Math.round(elem.top+elem.height)});
+					fw.getDocumentDOM().addNewLine({x:resizeWidth+1, y:Math.round(elem.top)}, {x:resizeWidth+1, y:Math.round(elem.top+elem.height)});
 					fw.getDocumentDOM().addNewLine({x:Math.round(elem.left), y:resizeHeight+1}, {x:Math.round(elem.left+elem.width), y:resizeHeight+1});
 				}
 				
