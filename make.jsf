@@ -33,9 +33,9 @@ try{
 	fw.saveDocumentCopyAs(null,originalFile); 
 	var originalHeight = fw.getDocumentDOM().height;
 	var originalWidth  = fw.getDocumentDOM().width;
-	var originalDpi = 320;
+	var originalDpi = 480;
 
-	var dpis = new Array("xhdpi",320,"hdpi",240,"mdpi",160,"ldpi",120);
+	var dpis = new Array("xxhdpi",480,"xhdpi",320,"hdpi",240,"mdpi",160,"ldpi",120);
 	var dpiLength = dpis.length;
 	var layerLength = dom.layers.length;
 	for(var i=0; i<dpiLength;i+=2){
