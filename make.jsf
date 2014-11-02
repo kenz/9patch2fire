@@ -1,7 +1,7 @@
 /*************************************************
 9patch2fire
 
-created Kenji Matsuoka ï¼ˆhttp://firespeed.orgï¼‰
+created Kenji Matsuoka ihttp://firespeed.orgj
 Creative Commons Attribution 3.0.
 *************************************************/
 var dom = fw.getDocumentDOM();
@@ -35,9 +35,24 @@ try{
 	var originalWidth  = fw.getDocumentDOM().width;
 	var originalDpi = 480;
 
-	var dpis = new Array("xxhdpi",480,"xhdpi",320,"hdpi",240,"mdpi",160,"ldpi",120);
+	var dpis = new Array("drawable-xxhdpi",480,"drawable-xhdpi",320,"drawable-hdpi",240,"drawable-mdpi",160,"drawable-ldpi",120);
 	var dpiLength = dpis.length;
 	var layerLength = dom.layers.length;
+	var editDom = fw.getDocumentDOM();
+	// content‚Æpatches‚ÌƒOƒ‹[ƒv‰ğœ‚µƒAƒ“ƒ`ƒGƒCƒŠƒAƒX‚È‚µ‚Ì“h‚è‚Ì‚İ‚Æ‚·‚éiŠÛ‚ß‚¶‚Ì‚­‚è‚ ‚ª‚è–h~j
+	for(var j=0; j<layerLength; j++){
+		if(editDom.layers[j].name == "patches" || editDom.layers[j].name == "content"){
+			var elemsLength = editDom.layers[j].elems.length;
+			var elems = editDom.layers[j].elems;
+			for(var k=0; k<elemsLength; k++){
+				var elem = elems[k];
+				elem.pathAttributes.brush = null;
+				elem.pathAttributes.fill.edgeType = "hard";
+			}
+		}
+	}
+
+
 	for(var i=0; i<dpiLength;i+=2){
 		var editDocument = fw.openDocument(originalFile, true, false)
 		var editDom = fw.getDocumentDOM();
@@ -48,11 +63,43 @@ try{
 		createFolder.create();
 
 		var newDpi = dpis[i+1];
-		var resizeHeight = originalHeight * newDpi / originalDpi;
-		var resizeWidth = originalWidth * newDpi / originalDpi;
+		var resizeHeight = Math.round(originalHeight * newDpi / originalDpi);
+		var resizeWidth = Math.round(originalWidth * newDpi / originalDpi);
 
 		if(originalDpi != newDpi){
 			fw.getDocumentDOM().setDocumentImageSize({left:0, top:0, right:resizeWidth, bottom:resizeHeight}, {pixelsPerUnit:newDpi, units:"inch"}, true);
+
+			for(var j=0; j<layerLength; j++){
+
+			fw.getDocumentDOM().selectAllOnLayer(j, false, false);
+
+			/*Fireworks•W€ƒXƒNƒŠƒvƒg*/
+			TransformNodes = function(){
+				var n , cs, ns, ss = fw.selection.length;
+				var distp, dists, angp, angs, ang, ppt, spt;
+				while(ss--){
+					cs = fw.selection[ss].contours.length;
+					while (cs--){
+						ns = fw.selection[ss].contours[cs].nodes.length;
+						while (ns--){
+							if (fw.selection[ss].contours[cs].nodes[ns].isSelectedPoint || fw.activeTool!='Subselection'){
+								n = fw.selection[ss].contours[cs].nodes[ns];
+								n.x = Math.round(n.x);
+								n.y = Math.round(n.y);
+								n.predX = Math.round(n.predX);
+								n.predY = Math.round(n.predY);
+								n.succX = Math.round(n.succX);
+								n.succY = Math.round(n.succY);
+							}
+						}
+					}
+				}
+			}
+			try {
+				TransformNodes();
+			}catch(e){}
+				/*Fireworks•W€ƒXƒNƒŠƒvƒg@‚±‚±‚Ü‚Å*/
+			}
 		}
 		fw.getDocumentDOM().setDocumentCanvasSize({left:-1, top:-1, right:resizeWidth+1, bottom:resizeHeight+1}, true);
 		for(var j=0; j<layerLength; j++){
@@ -62,8 +109,8 @@ try{
 				var elems = editDom.layers[j].elems;
 				for(var k=0; k<elemsLength; k++){
 					var elem = elems[k];
-					fw.getDocumentDOM().addNewLine({x:0, y:Math.round(elem.top)}, {x:0, y:Math.round(elem.top+elem.height)});
-					fw.getDocumentDOM().addNewLine({x:Math.round(elem.left), y:0}, {x:Math.round(elem.left+elem.width), y:0});
+					fw.getDocumentDOM().addNewLine({x:0, y:Math.ceil(elem.top)}, {x:0, y:Math.ceil(elem.top+elem.height)-1});
+					fw.getDocumentDOM().addNewLine({x:Math.ceil(elem.left), y:0}, {x:Math.ceil(elem.left+elem.width)-1, y:0});
 				}
 			}else if(editDom.layers[j].name == "content"){
 				editDom.setLayerVisible(j, -1, false, false);
@@ -71,8 +118,8 @@ try{
 				var elems = editDom.layers[j].elems;
 				for(var k=0; k<elemsLength; k++){
 					var elem = elems[k];
-					fw.getDocumentDOM().addNewLine({x:resizeWidth+1, y:Math.round(elem.top)}, {x:resizeWidth+1, y:Math.round(elem.top+elem.height)});
-					fw.getDocumentDOM().addNewLine({x:Math.round(elem.left), y:resizeHeight+1}, {x:Math.round(elem.left+elem.width), y:resizeHeight+1});
+					fw.getDocumentDOM().addNewLine({x:resizeWidth+1, y:Math.ceil(elem.top)}, {x:resizeWidth+1, y:Math.ceil(elem.top+elem.height)-3});
+					fw.getDocumentDOM().addNewLine({x:Math.ceil(elem.left), y:resizeHeight+1}, {x:Math.ceil(elem.left+elem.width)-1, y:resizeHeight+1});
 				}
 				
 			}
